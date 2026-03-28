@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig(({ command }) => ({
-  /** GitHub Pages needs `/lovesmeornot/`; `vite dev` uses `/` so local URL is http://localhost:5173/ */
-  base: command === 'build' ? '/lovesmeornot/' : '/',
+/** Same path as GitHub Pages: open http://localhost:5173/lovesmeornot/ in dev (port from terminal). */
+export default defineConfig({
+  base: '/lovesmeornot/',
   plugins: [react()],
-}))
+})

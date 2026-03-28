@@ -29,9 +29,7 @@ export function FlowerStage({ flower, remainingPetals, onPetalClick, interactive
         disabled={!interactive || remainingPetals <= 0}
         onClick={onPetalClick}
         aria-label={
-          remainingPetals > 0
-            ? `꽃을 눌러 꽃잎 떼기. 남은 꽃잎 ${remainingPetals}개`
-            : "꽃잎이 모두 떨어졌습니다"
+          remainingPetals > 0 ? "꽃을 눌러 꽃잎 한 장씩 떼기" : "꽃잎이 모두 떨어졌습니다"
         }
         whileTap={interactive && remainingPetals > 0 ? { scale: 0.97 } : undefined}
         className="relative flex aspect-square w-[min(100vw-2rem,20rem)] max-w-[320px] items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dream-500 disabled:cursor-default"
@@ -95,15 +93,8 @@ export function FlowerStage({ flower, remainingPetals, onPetalClick, interactive
         </motion.div>
       </motion.button>
 
-      <div className="mt-6 w-full max-w-xs px-1">
-        <div
-          className="mb-3 h-2 overflow-hidden rounded-full bg-dream-200/80"
-          role="progressbar"
-          aria-valuenow={remainingPetals}
-          aria-valuemin={0}
-          aria-valuemax={total}
-          aria-label="남은 꽃잎 비율"
-        >
+      <div className="mt-6 w-full max-w-xs px-1" aria-hidden>
+        <div className="mb-3 h-2 overflow-hidden rounded-full bg-dream-200/80">
           <motion.div
             className="h-full rounded-full bg-gradient-to-r from-sky-400 via-dream-400 to-indigo-400"
             initial={false}
@@ -116,15 +107,6 @@ export function FlowerStage({ flower, remainingPetals, onPetalClick, interactive
 
       <div className="flex w-full max-w-xs flex-col items-center gap-1 text-center">
         <p className="text-lg font-semibold text-dream-900">{flower.name}</p>
-        <p className="text-sm text-dream-600">
-          {remainingPetals > 0 ? (
-            <>
-              남은 꽃잎 <span className="font-semibold text-dream-800">{remainingPetals}</span>개
-            </>
-          ) : (
-            "모든 꽃잎이 날아갔어요"
-          )}
-        </p>
         {interactive && remainingPetals > 0 ? (
           <p className="text-xs text-dream-500">꽃을 눌러 한 장씩 떼어 보세요</p>
         ) : null}
