@@ -47,7 +47,3 @@ export const flowers: Flower[] = [
     label: "고요한 바이올렛",
   },
 ]
-
-export function getFlowerById(id: string): Flower | undefined {
-  return flowers.find((f) => f.id === id)
-}

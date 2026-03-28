@@ -10,7 +10,6 @@ export function ToastMessage({ text }: ToastMessageProps) {
       className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] md:pb-10"
       aria-live="polite"
       aria-atomic="true"
-      data-framer-name="Toast"
     >
       <AnimatePresence mode="wait">
         {text ? (

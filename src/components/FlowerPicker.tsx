@@ -8,7 +8,7 @@ type FlowerPickerProps = {
 
 export function FlowerPicker({ flowers, selectedId, onSelect }: FlowerPickerProps) {
   return (
-    <fieldset className="space-y-3" data-framer-name="Flower options">
+    <fieldset className="space-y-3">
       <legend className="mb-3 block text-sm font-medium text-dream-700">꽃을 골라주세요</legend>
       <div className="grid gap-3 sm:grid-cols-3">
         {flowers.map((f) => {
@@ -16,7 +16,6 @@ export function FlowerPicker({ flowers, selectedId, onSelect }: FlowerPickerProp
           return (
             <label
               key={f.id}
-              data-framer-name={`Flower option — ${f.name}`}
               className={`group relative flex cursor-pointer flex-col rounded-2xl border-2 bg-white/80 p-4 shadow-soft transition focus-within:ring-2 focus-within:ring-dream-400 ${
                 selected
                   ? "border-dream-500 ring-2 ring-dream-300/60"

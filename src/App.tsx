@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { AppFramerExport } from "./AppFramerExport"
 import { FinalResultPanel } from "./components/FinalResultPanel"
 import { FlowerStage } from "./components/FlowerStage"
 import { IntroScreen } from "./components/IntroScreen"
@@ -15,7 +14,7 @@ function buildMessage(concern: string, index: number): string {
   return q ? `${q} ${suffix}` : suffix
 }
 
-function AppMain() {
+export default function App() {
   const [phase, setPhase] = useState<Phase>("intro")
   const [concern, setConcern] = useState("")
   const [flowerId, setFlowerId] = useState<string | null>(null)
@@ -23,7 +22,6 @@ function AppMain() {
   const [toastText, setToastText] = useState<string | null>(null)
   const [finalMessage, setFinalMessage] = useState("")
   const resultTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  /** Avoids double-decrement if the last petal is clicked twice before React re-renders. */
   const remainingRef = useRef(0)
 
   const flower = useMemo(
@@ -120,17 +118,14 @@ function AppMain() {
   }
 
   return (
-    <div className="relative min-h-dvh overflow-x-hidden" data-framer-name="Page">
-      <div
-        className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
-        data-framer-name="Ambient background"
-      >
+    <div className="relative min-h-dvh overflow-x-hidden">
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -left-1/4 top-0 h-[min(70vh,520px)] w-[min(90vw,480px)] rounded-full bg-gradient-to-br from-sky-200/50 via-dream-200/40 to-transparent blur-3xl" />
         <div className="absolute -right-1/4 bottom-0 h-[min(60vh,440px)] w-[min(85vw,420px)] rounded-full bg-gradient-to-tl from-blue-200/45 via-cyan-100/35 to-transparent blur-3xl" />
         <div className="absolute left-1/2 top-1/3 h-40 w-40 -translate-x-1/2 rounded-full bg-sky-100/35 blur-2xl" />
       </div>
 
-      <main className="relative mx-auto flex min-h-dvh max-w-2xl flex-col" data-framer-name="Main">
+      <main className="relative mx-auto flex min-h-dvh max-w-2xl flex-col">
         <AnimatePresence mode="wait">
           {phase === "intro" ? (
             <IntroScreen
@@ -151,7 +146,6 @@ function AppMain() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className={`flex flex-1 flex-col px-4 py-8 md:py-12 ${phase === "result" ? "opacity-40" : ""}`}
-              data-framer-name="Play stage"
             >
               <header className="mb-6 text-center">
                 <h2 className="text-xl font-semibold text-dream-900 md:text-2xl">꽃잎을 하나씩 떼어 보세요</h2>
@@ -186,15 +180,4 @@ function AppMain() {
       ) : null}
     </div>
   )
-}
-
-export default function App() {
-  const [framerExport] = useState(() => {
-    if (typeof window === "undefined") return false
-    return new URLSearchParams(window.location.search).get("framer") === "1"
-  })
-
-  if (framerExport) return <AppFramerExport />
-
-  return <AppMain />
 }

@@ -23,7 +23,7 @@ export function FlowerStage({ flower, remainingPetals, onPetalClick, interactive
   const m = Math.max(remainingPetals, 1)
 
   return (
-    <div className="flex w-full flex-col items-center" data-framer-name="Flower">
+    <div className="flex w-full flex-col items-center">
       <motion.button
         type="button"
         disabled={!interactive || remainingPetals <= 0}

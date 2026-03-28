@@ -1,13 +1,12 @@
 import { motion } from "framer-motion"
 
+const HEADING_ID = "final-result-heading"
+
 type FinalResultPanelProps = {
   message: string
   onRestartFromScratch: () => void
   onRestartWithSameQuestion: () => void
-  /** 질문이 비어 있으면 첫 버튼만 비활성화 (두 선택지는 항상 표시). */
   canReplayWithSameQuestion: boolean
-  /** `inline`: stacked export for HTML → Framer; `modal`: full-screen overlay (default). */
-  layout?: "modal" | "inline"
 }
 
 function ResultCardBody({
@@ -15,13 +14,11 @@ function ResultCardBody({
   onRestartFromScratch,
   onRestartWithSameQuestion,
   canReplayWithSameQuestion,
-  headingId,
 }: {
   message: string
   onRestartFromScratch: () => void
   onRestartWithSameQuestion: () => void
   canReplayWithSameQuestion: boolean
-  headingId: string
 }) {
   return (
     <>
@@ -35,7 +32,7 @@ function ResultCardBody({
       />
 
       <p className="mb-2 text-sm font-medium tracking-wide text-dream-600">꽃이 전하는 답</p>
-      <h2 id={headingId} className="mb-8 text-2xl font-semibold leading-snug text-dream-900 md:text-3xl">
+      <h2 id={HEADING_ID} className="mb-8 text-2xl font-semibold leading-snug text-dream-900 md:text-3xl">
         {message}
       </h2>
 
@@ -85,51 +82,28 @@ export function FinalResultPanel({
   onRestartFromScratch,
   onRestartWithSameQuestion,
   canReplayWithSameQuestion,
-  layout = "modal",
 }: FinalResultPanelProps) {
-  const headingId = layout === "inline" ? "final-result-heading-inline" : "final-result-heading"
-
-  if (layout === "inline") {
-    return (
-      <div
-        className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/70 bg-gradient-to-br from-white via-dream-50 to-dream-100 p-8 text-center shadow-float"
-        data-framer-name="Result card"
-      >
-        <ResultCardBody
-          message={message}
-          onRestartFromScratch={onRestartFromScratch}
-          onRestartWithSameQuestion={onRestartWithSameQuestion}
-          canReplayWithSameQuestion={canReplayWithSameQuestion}
-          headingId={headingId}
-        />
-      </div>
-    )
-  }
-
   return (
     <motion.div
       role="dialog"
       aria-modal="true"
-      aria-labelledby={headingId}
+      aria-labelledby={HEADING_ID}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.45 }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-dream-900/35 p-4 backdrop-blur-[2px]"
-      data-framer-name="Result overlay"
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.94, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 320, damping: 28, delay: 0.08 }}
         className="relative max-h-[min(90dvh,calc(100dvh-var(--keyboard-inset,0px)-2rem))] w-full max-w-md overflow-y-auto overflow-x-hidden rounded-3xl border border-white/70 bg-gradient-to-br from-white via-dream-50 to-dream-100 p-8 text-center shadow-float"
-        data-framer-name="Result dialog"
       >
         <ResultCardBody
           message={message}
           onRestartFromScratch={onRestartFromScratch}
           onRestartWithSameQuestion={onRestartWithSameQuestion}
           canReplayWithSameQuestion={canReplayWithSameQuestion}
-          headingId={headingId}
         />
       </motion.div>
     </motion.div>
